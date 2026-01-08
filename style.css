@@ -19,6 +19,21 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+#real-btn {
+    background-color: green;
+}
+
+#fake-btn {
+    background-color: red;
+}
+
+#generate-btn {
+    background-color: #007bff;
 }
 
 #news-box {
@@ -39,4 +54,10 @@ button {
 #language-selector select {
     font-size: 16px;
     padding: 6px 10px;
+}
+
+#result {
+    font-size: 20px;
+    margin-top: 15px;
+    font-weight: bold;
 }
