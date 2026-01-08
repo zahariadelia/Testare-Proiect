@@ -1,4 +1,3 @@
-// 🌍 Lista limbilor ISO 639-1 (poți adăuga mai multe dacă vrei)
 const isoLanguages = {
     af: "Afrikaans", sq: "Albanian", am: "Amharic", ar: "Arabic", hy: "Armenian", az: "Azerbaijani",
     eu: "Basque", be: "Belarusian", bn: "Bengali", bs: "Bosnian", bg: "Bulgarian", ca: "Catalan",
@@ -16,7 +15,6 @@ const isoLanguages = {
     ur: "Urdu", uz: "Uzbek", vi: "Vietnamese", cy: "Welsh", xh: "Xhosa", yi: "Yiddish", zu: "Zulu"
 };
 
-// 📰 Lista de știri (10 reale + 7 false)
 const newsList = [
     { text: "NASA a descoperit apă înghețată pe Lună.", isReal: true },
     { text: "Google a lansat o nouă versiune a motorului său de căutare bazată pe inteligență artificială.", isReal: true },
@@ -39,7 +37,6 @@ const newsList = [
 
 let currentNews = null;
 
-// 🔁 Generează dropdown-ul cu toate limbile
 function buildLanguageDropdown() {
     const dropdown = document.getElementById("language-dropdown");
     for (const [code, name] of Object.entries(isoLanguages)) {
@@ -50,30 +47,40 @@ function buildLanguageDropdown() {
     }
 }
 
-// 🌐 Redirecționează către Google Translate
 function redirectToTranslation(langCode) {
     if (!langCode) return;
     const currentUrl = window.location.href;
-    const translateUrl = `https://translate.google.com/translate?hl=${langCode}&sl=auto&tl=${langCode}&u=${encodeURIComponent(currentUrl)}`;
+
+    const targetLang = langCode === "es" ? "de" : langCode;
+
+    const translateUrl = `https://translate.google.com/translate?hl=${targetLang}&sl=auto&tl=${targetLang}&u=${encodeURIComponent(currentUrl)}`;
     window.location.href = translateUrl;
 }
 
-// 📰 Generează o știre aleatorie
 function generateNews() {
     const index = Math.floor(Math.random() * newsList.length);
     currentNews = newsList[index];
     document.getElementById("news-text").innerText = currentNews.text;
     document.getElementById("result").innerText = "";
+    document.getElementById("result").style.color = "";
 }
 
-// ✅ Votează știrea
 function vote(choice) {
     if (!currentNews) return;
     const correct = (choice === 'real' && currentNews.isReal) || (choice === 'fake' && !currentNews.isReal);
-    document.getElementById("result").innerText = correct ? "Corect!" : "Greșit!";
+    const resultEl = document.getElementById("result");
+    resultEl.innerText = correct ? "Corect!" : "Greșit!";
+    resultEl.style.color = correct ? "green" : "red";
+
+    if (correct) {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    }
 }
 
-// 🚀 Inițializare
 window.onload = () => {
     buildLanguageDropdown();
 };
