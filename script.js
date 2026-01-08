@@ -81,6 +81,11 @@ function vote(choice) {
     }
 }
 
+document.getElementById("language-dropdown").addEventListener("change", function () {
+    const selectedLang = this.value;
+    redirectToTranslation(selectedLang);
+});
+
 window.onload = () => {
     buildLanguageDropdown();
 };
